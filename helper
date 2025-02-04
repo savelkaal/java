@@ -1,0 +1,66 @@
+class HelpClass {
+
+    private String[] menuOptions = {
+            " 1. if",
+            " 2. switch",
+            " 3. for",
+            " 4. while",
+            " 5. do-while",
+            " 6. break",
+            " 7. continue"
+    };
+
+    private String[] helpTexts = {
+            "Инструкция if:\n\nif(условие) инструкция;\nelse инструкция;",
+            "Инструкция switch:\n\nswitch(выражение) {\n case константа:\n последовательность инструкций\n break;\n // ...\n}",
+            "Цикл for:\n\nfor(init; условие; итерация) инструкция;",
+            "Цикл while:\n\nwhile(условие) инструкция;",
+            "Цикл do-while:\n\ndo {\n инструкция;\n} while (условие);",
+            "Инструкция break:\n\nbreak; или break метка;",
+            "Инструкция continue:\n\ncontinue; или continue метка;"
+    };
+
+    public void showMenu() {
+        System.out.println("Справка:");
+        for (String option : menuOptions) {
+            System.out.println(option);
+        }
+        System.out.println("q - выход");
+    }
+
+    public boolean isValid(char choice) {
+        return (choice >= '1' && choice <= '7') || choice == 'q';
+    }
+
+    public void helpOn(char choice) {
+        if (choice == 'q') return;
+
+        int index = choice - '1';
+        if (index >= 0 && index < helpTexts.length) {
+            System.out.println("\n" + helpTexts[index] + "\n");
+        } else {
+            System.out.println("\nНеверный выбор.\n");
+        }
+    }
+
+    public static void main(String args[]) throws java.io.IOException {
+        HelpClass help = new HelpClass();
+        char choice, ignore;
+        for (;;) {
+            help.showMenu();
+            System.out.print("Выберите (q - выход): ");
+            choice = (char) System.in.read();
+            do {
+                ignore = (char) System.in.read();
+            } while (ignore != '\n');
+
+            if (help.isValid(choice)) {
+                help.helpOn(choice);
+            } else if (choice != 'q') {
+                System.out.println("\nНеверный выбор.\n");
+            } else {
+                break;
+            }
+        }
+    }
+}
