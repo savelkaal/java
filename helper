@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 class HelpClass {
 
     private String[] menuOptions = {
@@ -43,24 +45,26 @@ class HelpClass {
         }
     }
 
-    public static void main(String args[]) throws java.io.IOException {
+    public static void main(String[] args) {
         HelpClass help = new HelpClass();
-        char choice, ignore;
-        for (;;) {
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) { 
             help.showMenu();
             System.out.print("Выберите (q - выход): ");
-            choice = (char) System.in.read();
-            do {
-                ignore = (char) System.in.read();
-            } while (ignore != '\n');
+            String input = scanner.nextLine();
 
-            if (help.isValid(choice)) {
-                help.helpOn(choice);
-            } else if (choice != 'q') {
-                System.out.println("\nНеверный выбор.\n");
-            } else {
+            if (input.equalsIgnoreCase("q")) { 
                 break;
             }
+
+            char choice = input.charAt(0); 
+            if (help.isValid(choice)) {
+                help.helpOn(choice);
+            } else {
+                System.out.println("\nНеверный выбор.\n");
+            }
         }
+        scanner.close(); 
     }
 }
